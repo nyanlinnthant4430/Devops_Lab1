@@ -1,5 +1,7 @@
 # Devops_Lab1
 Lab1
 Lab2
-![workflow](https://github.com/<UserName>/<RepositoryName>/actions/workflows/main.yml/badge.svg)
+# DevOps
+![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/nyanlinnthant4430/Devops_Lab1/main.yml?branch=main&style=flat-square)
+
 
