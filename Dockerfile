@@ -1,4 +1,4 @@
 FROM openjdk:17
-WORKDIR /app
-COPY ./target/app-jar-with-dependencies.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY ./target/app-jar-with-dependencies.jar /tmp
+WORKDIR /tmp
+ENTRYPOINT ["java", "-jar", "app-jar-with-dependencies.jar"]
