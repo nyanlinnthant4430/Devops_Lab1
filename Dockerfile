@@ -1,5 +1,4 @@
-FROM openjdk:19
-LABEL authors="Nyan"
-COPY ./target/classes/imc /tmp/imc
-WORKDIR /tmp
-ENTRYPOINT ["java", "imc.com.App"]
+FROM openjdk:17
+WORKDIR /app
+COPY ./target/app-jar-with-dependencies.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
