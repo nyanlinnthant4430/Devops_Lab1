@@ -1,4 +1,4 @@
 FROM openjdk:17
-COPY ./target/alpha-0.1.0.2-jar-with-dependencies.jar /tmp
+COPY ./target/DevOpsLab3-0.1.0.2-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "alpha-0.1.0.2-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "DevOpsLab3-0.1.0.2-jar-with-dependencies.jar"]
