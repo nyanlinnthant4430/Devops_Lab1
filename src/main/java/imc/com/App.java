@@ -2,6 +2,7 @@ package imc.com;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class App {
@@ -89,20 +90,16 @@ public class App {
      *
      * @return A list of all employees and salaries, or null if there is an error.
      */
-    public ArrayList<Employee> getAllSalaries() {
+    public LinkedList<Employee> getAllSalaries() {
         try {
-            // Create an SQL statement
             Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
-                            + "FROM employees, salaries "
-                            + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
-                            + "ORDER BY employees.emp_no ASC";
-            // Execute SQL statement
+            String strSelect = "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary "
+                    + "FROM employees, salaries "
+                    + "WHERE employees.emp_no = salaries.emp_no AND salaries.to_date = '9999-01-01' "
+                    + "ORDER BY employees.emp_no ASC";
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Extract employee information
-            ArrayList<Employee> employees = new ArrayList<Employee>();
+
+            LinkedList<Employee> employees = new LinkedList<>();
             while (rset.next()) {
                 Employee emp = new Employee();
                 emp.emp_no = rset.getInt("employees.emp_no");
@@ -132,25 +129,31 @@ public class App {
                             + "Manager: " + emp.manager + "\n");
         }
     }
-
+    public void printSalaries(LinkedList<Employee> employees) {
+        System.out.println(String.format("%-10s %-15s %-20s %-8s", "Emp No", "First Name", "Last Name", "Salary"));
+        for (Employee emp : employees) {
+            String emp_string = String.format("%-10s %-15s %-20s %-8s",
+                    emp.emp_no, emp.first_name, emp.last_name, emp.salary);
+            System.out.println(emp_string);
+        }
+    }
 
     /**
      * Main entry point.
      */
     public static void main(String[] args) {
-        // Create new Application
         App a = new App();
-
-        // Connect to database
         a.connect();
-
-        // Extract employee salary information
-        ArrayList<Employee> employees = a.getAllSalaries();
-
-        // Test the size of the returned data - should be 240124
-        System.out.println(employees.size());
-
-        // Disconnect from database
+        LinkedList<Employee> employees = a.getAllSalaries();
+        if (employees != null) {
+            System.out.println(employees.size());
+            a.printSalaries(employees);
+        }
         a.disconnect();
     }
 }
+    /**
+     * Prints a list of employees.
+     * @param employees The list of employees to print.
+     */
+
