@@ -1,6 +1,8 @@
 package imc.com;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     /**
@@ -102,6 +104,72 @@ public class App {
         }
     }
 
+
+    /**
+     * Get employees with current salary by role.
+     */
+    public List<Employee> implementSalariesByRoleFeature(String role)
+    {
+        try
+        {
+            Statement stmt = this.con.createStatement();
+            String strSelect = "SELECT e.emp_no, e.first_name, e.last_name, t.title, s.salary " +
+                    "FROM employees e, salaries s, titles t " +
+                    "WHERE e.emp_no = s.emp_no " +
+                    "AND e.emp_no = t.emp_no " +
+                    "AND s.to_date = '9999-01-01' " +
+                    "AND t.to_date = '9999-01-01' " +
+                    "AND t.title = '" + role + "' " +
+                    "ORDER BY e.emp_no ASC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            List<Employee> employees = new ArrayList<>();
+
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("emp_no");
+                emp.first_name = rset.getString("first_name");
+                emp.last_name = rset.getString("last_name");
+                emp.title = rset.getString("title");
+                emp.salary = rset.getInt("salary");
+                employees.add(emp);
+            }
+
+            return employees;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salaries by role");
+            return null;
+        }
+    }
+
+    /**
+     * Display employees in tabular format (for salaries by role).
+     */
+    public void displayEmployeesByRole(List<Employee> employees)
+    {
+        if (employees != null && !employees.isEmpty())
+        {
+            for (Employee emp : employees)
+            {
+                System.out.printf("%-10d %-15s %-20s %-10d%n",
+                        emp.emp_no,
+                        emp.first_name,
+                        emp.last_name,
+                        emp.salary);
+            }
+        }
+        else
+        {
+            System.out.println("No employees found for this role.");
+        }
+    }
+
+
+
     public void displayEmployee(Employee emp)
     {
         if (emp != null)
@@ -117,19 +185,27 @@ public class App {
         }
     }
 
+
+
+    /**
+     * Main entry point.
+     */
     public static void main(String[] args)
     {
-        // Create new Application
         App a = new App();
 
         // Connect to database
         a.connect();
-        // Get Employee
+
+        // Example 1: Get single employee by ID
         Employee emp = a.getEmployee(255530);
-        // Display results
         a.displayEmployee(emp);
 
-        // Disconnect from database
+        // Example 2: Get employees by role and display table
+        List<Employee> engineers = a.implementSalariesByRoleFeature("Engineer");
+        a.displayEmployeesByRole(engineers);
+
+        // Disconnect
         a.disconnect();
     }
 }
