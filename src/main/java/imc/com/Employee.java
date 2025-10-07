@@ -33,7 +33,7 @@ public class Employee
     /**
      * Employee's current department
      */
-    public Department dept_name;
+    public String dept_name;
 
     /**
      * Employee's manager
