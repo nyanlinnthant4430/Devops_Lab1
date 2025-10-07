@@ -116,6 +116,44 @@ public class App {
         }
     }
 
+    public Department getDepartment(String dept_name)
+    {
+
+        return null;
+    }
+    public LinkedList<Employee> getSalariesByDepartment(String deptNo) {
+        LinkedList<Employee> employees = new LinkedList<>();
+
+        String sql = "SELECT employees.emp_no, employees.first_name, employees.last_name, salaries.salary " +
+                "FROM employees, salaries, dept_emp, departments " +
+                "WHERE employees.emp_no = salaries.emp_no " +
+                "AND employees.emp_no = dept_emp.emp_no " +
+                "AND dept_emp.dept_no = departments.dept_no " +
+                "AND salaries.to_date = '9999-01-01' " +
+                "AND departments.dept_no = ? " +
+                "ORDER BY employees.emp_no ASC";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, deptNo);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Employee emp = new Employee();
+                emp.emp_no = rs.getInt("emp_no");
+                emp.first_name = rs.getString("first_name");
+                emp.last_name = rs.getString("last_name");
+                emp.salary = rs.getInt("salary");
+                employees.add(emp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salary details by department");
+        }
+
+        return employees;
+    }
+
 
     public void displayEmployee(Employee emp) {
         if (emp != null) {
@@ -148,6 +186,10 @@ public class App {
         if (employees != null) {
             System.out.println(employees.size());
             a.printSalaries(employees);
+        }
+        LinkedList<Employee> list = a.getSalariesByDepartment("d005");
+        if (list != null) {
+            a.printSalaries(list);
         }
         a.disconnect();
     }
