@@ -12,7 +12,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,7 +26,7 @@ public class App {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start
-                Thread.sleep(10000);
+                Thread.sleep(delay);
                 // Connect to database
                 con = DriverManager.getConnection(
                         "jdbc:mysql://db:3306/employees?useSSL=false&allowPublicKeyRetrieval=true",
@@ -248,7 +248,11 @@ public class App {
      */
     public static void main(String[] args) {
         App a = new App();
-        a.connect();
+        if(args.length < 1){
+            a.connect("localhost:3306", 30000);
+        }else{
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         // 1️⃣ Get all current salaries
         LinkedList<Employee> employees = a.getAllSalaries();
