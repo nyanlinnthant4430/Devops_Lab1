@@ -12,6 +12,9 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
+    /**
+     * Connect to the MySQL database.
+     */
     public void connect(String location, int delay) {
         try {
             // Load Database driver
@@ -27,20 +30,23 @@ public class App {
             try {
                 // Wait a bit for db to start
                 Thread.sleep(delay);
+
+                // Build JDBC URL dynamically using the location parameter
+                String jdbcUrl = "jdbc:mysql://" + location + "/employees?useSSL=false&allowPublicKeyRetrieval=true";
+
                 // Connect to database
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/employees?useSSL=false&allowPublicKeyRetrieval=true",
-                        "root", "example");
-                System.out.println("Successfully connected");
+                con = DriverManager.getConnection(jdbcUrl, "root", "example");
+                System.out.println("Successfully connected to " + jdbcUrl);
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println("Failed to connect to database attempt " + (i+1));
                 System.out.println(sqle.getMessage());
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
+
 
     /**
      * Disconnect from the MySQL database.
