@@ -69,7 +69,7 @@
                     <finalName>devops</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.napier.devops.App</mainClass>
+                            <mainClass>imc.com.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

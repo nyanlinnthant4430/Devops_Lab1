@@ -386,7 +386,7 @@ public class App {
         a.outputEmployees(employees, "ManagerSalaries.md");
 
         // Disconnect from database
-        //a.disconnect();
+        a.disconnect();
     }
 
 
