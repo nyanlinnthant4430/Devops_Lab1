@@ -1,10 +1,10 @@
 package imc.com;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,23 +23,26 @@ public class AppTest
     {
         app.printSalaries(null);
     }
+
     @Test
     void printSalariesTestEmpty()
     {
-        LinkedList<Employee> employess = new LinkedList<>();
+        ArrayList<Employee> employess = new ArrayList<Employee>();
         app.printSalaries(employess);
     }
+
     @Test
     void printSalariesTestContainsNull()
     {
-        LinkedList<Employee> employess = new LinkedList<>();
+        ArrayList<Employee> employess = new ArrayList<Employee>();
         employess.add(null);
         app.printSalaries(employess);
     }
+
     @Test
     void printSalaries()
     {
-        LinkedList<Employee> employees = new LinkedList<>();
+        ArrayList<Employee> employees = new ArrayList<Employee>();
         Employee emp = new Employee();
         emp.emp_no = 1;
         emp.first_name = "Kevin";
