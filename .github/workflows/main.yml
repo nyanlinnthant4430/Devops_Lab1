@@ -21,7 +21,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Unit Tests
-        run: mvn -Dtest=com.napier.devops.AppTest test
+        run: mvn -Dtest=imc.com.AppTest test
 
   IntegrationTests:
     name: Integration Tests
