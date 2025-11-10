@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '18'
-          distribution: 'amazoncorretto'
+          distribution: 'temurin'
       - name: Unit Tests
         run: mvn -Dtest=imc.com.AppTest test
 
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '18'
-          distribution: 'amazoncorretto'
+          distribution: 'temurin'
       - name: Package and Run docker compose
         run: |
           mvn package -DskipTests
